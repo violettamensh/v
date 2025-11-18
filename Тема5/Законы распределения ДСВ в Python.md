@@ -1,0 +1,100 @@
+**Задача 1: Биномиальное распределение**
+Вероятность того, что покупатель совершит покупку в магазине, равна 0.4. Найти закон распределения числа покупателей, совершивших покупку, математическое ожидание и дисперсию, если в магазин зашли 10 покупателей.
+
+```python
+n, p = 10, 0.4
+X = np.arange(0, n + 1)
+binomial_dist = binom(n, p)
+probabilities = binomial_dist.pmf(X)
+df = pd.DataFrame(data=probabilities.reshape(1, -1),
+                 columns=X, index=['p'])
+df
+
+
+print(f'Мат. ожидание = {binomial_dist.mean():.4f}')
+print(f'Дисперсия = {binomial_dist.var():.4f}')
+print(f'Ст. отклонение = {binomial_dist.std():.4f}')
+max_prob = probabilities.max()
+mode = [int(x) for x in X if round(probabilities[x], 6)==round(max_prob, 6)]
+print(f'Мода = {mode}')
+
+plt.figure(figsize=(8, 3))
+plt.bar(X, probabilities, color='skyblue', edgecolor='black', alpha=0.7)
+plt.title(f'Биномиальное распределение (n={n}, p={p})')
+plt.xlabel("Число покупателей, совершивших покупку, m")
+plt.ylabel('Вероятность, P(X=m)')
+plt.xticks(X)
+plt.grid(axis='y', alpha=0.75)
+plt.show()
+```
+
+**Задача 2: Распределение Пуассона**
+Пусть число заказов такси, поступивших на диспетчерский пункт за 30 минут, - это случайная величина, имеющая распределение Пуассона с параметром λ = 2.8. Событие A - за 30 минут поступило более 2 заказов. Найти P(A).
+
+```python
+lmb = 2.8
+X = np.arange(0, 10)
+poisson_dist = poisson(lmb)
+probabilities = poisson_dist.pmf(X)
+df = pd.DataFrame(data=probabilities.reshape(1, -1),
+                 columns=X, index=['p'])
+df
+
+print(f'P(за 30 минут поступило более 2 заказов) = {1 - poisson_dist.pmf(0) - poisson_dist.pmf(1) - poisson_dist.pmf(2):.4f}')
+
+```
+
+
+**Задача 3: Геометрическое распределение**
+Вероятность выигрыша в лотерею равна 0.02. Покупаются билеты до первого выигрыша. Необходимо:
+а) составить закон распределения числа купленных билетов;
+б) найти математическое ожидание и дисперсию этой случайной величины;
+в) определить вероятность того, что для выигрыша потребуется не менее 10 билетов.
+
+
+```python
+p = 0.02
+K = np.arange(1, 16)
+geom_dist = geom(p)
+probabilities = geom_dist.pmf(K)
+df = pd.DataFrame(data=probabilities.reshape(1, -1),
+                 columns=K, index=['p'])
+df
+
+plt.figure(figsize=(8, 3))
+plt.plot(K, probabilities, 'bo', ms=8, label='geom pmf')
+plt.vlines(K, 0, probabilities, colors='b', lw=2, alpha=0.5)
+plt.legend(loc='best', frameon=False)
+plt.show()
+
+print(f'Мат. ожидание = {geom_dist.mean():.4f}')
+print(f'Дисперсия = {geom_dist.var():.4f}')
+print(f'P(потребуется не менее 10 билетов) = {1 - probabilities[:9].sum():.4f}')
+
+```
+
+
+**Задача 4: Гипергеометрическое распределение**
+В партии из 25 изделий 6 бракованных. Необходимо:
+а) составить закон распределения числа бракованных изделий среди выбранных наудачу восьми;
+б) найти математическое ожидание и дисперсию этой случайной величины;
+в) определить вероятность того, что среди выбранных нет бракованных изделий.
+
+```python
+N, M, n = 25, 6, 8
+X = np.arange(0, n + 1)
+hypergeom_dist = hypergeom(M=N, n=M, N=n)
+probabilities = hypergeom_dist.pmf(X)
+df = pd.DataFrame(data=probabilities.reshape(1, -1),
+                 columns=X, index=['p'])
+df
+
+plt.figure(figsize=(8, 3))
+plt.plot(X, probabilities, '-bo', ms=8, label='hypergeom pmf')
+plt.show()
+
+print(f'Мат. ожидание = {hypergeom_dist.mean():.4f}')
+print(f'Дисперсия = {hypergeom_dist.var():.4f}')
+print(f'P(среди выбранных нет бракованных) = {probabilities[0]:.4f}')
+
+```
