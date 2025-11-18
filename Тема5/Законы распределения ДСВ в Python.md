@@ -75,7 +75,9 @@ print(f'Дисперсия = {geom_dist.var():.4f}')
 print(f'P(потребуется не менее 10 билетов) = {1 - probabilities[:9].sum():.4f}')
 
 ```
+**Результаты работы проограммы:**
 
+<img width="717" height="338" alt="Снимок экрана 2025-11-18 в 09 47 14" src="https://github.com/user-attachments/assets/ad9bd941-899b-48af-888a-8ee587b7fc39" />
 
 **Задача 4: Гипергеометрическое распределение**
 В партии из 25 изделий 6 бракованных. Необходимо:
@@ -101,3 +103,6 @@ print(f'Дисперсия = {hypergeom_dist.var():.4f}')
 print(f'P(среди выбранных нет бракованных) = {probabilities[0]:.4f}')
 
 ```
+**Результаты работы проограммы:**
+
+<img width="684" height="332" alt="Снимок экрана 2025-11-18 в 09 48 02" src="https://github.com/user-attachments/assets/77bb5144-1300-4411-9ce1-f6535b47bd13" />
